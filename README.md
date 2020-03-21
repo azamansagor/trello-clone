@@ -1,4 +1,4 @@
-# Trello like Drand & Drop Task Manager
+# Trello like Drag & Drop Task Manager
 
 
 
