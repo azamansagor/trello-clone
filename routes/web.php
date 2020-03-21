@@ -16,6 +16,15 @@ $router->get('/', function () use ($router) {
 });
 
 
+
+
+// authentication routes
+$router->post('login', 'AuthController@login');
+$router->post('register', 'AuthController@register');
+$router->post('logout', 'AuthController@logout');
+
+
+//board routes
 $router->get('/boards', 'BoardController@index');
 $router->get('/boards/{id}', 'BoardController@show');
 $router->post('/boards', 'BoardController@store');
