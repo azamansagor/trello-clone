@@ -16,7 +16,7 @@
     <tr>
         <td>POST</td>
         <td>/login</td>
-        <td>eamil , password</td>
+        <td>email , password</td>
     </tr>
     <tr>
         <td>POST</td>
