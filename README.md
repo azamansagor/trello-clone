@@ -1,6 +1,6 @@
 # Trello like Drag & Drop Task Manager
 
 # API List
-[API List](other_file.md)
+[API List](README_API_LIST.md)
 
 
