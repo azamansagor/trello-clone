@@ -26,5 +26,7 @@ $router->post('logout', 'AuthController@logout');
 
 //board routes
 $router->get('/boards', 'BoardController@index');
-$router->get('/boards/{id}', 'BoardController@show');
 $router->post('/boards', 'BoardController@store');
+$router->get('/boards/{id}', 'BoardController@show');
+$router->put('/boards/{id}', 'BoardController@update');
+$router->delete('/boards/{id}' , 'BoardController@destory');

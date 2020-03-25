@@ -14,7 +14,7 @@ class BoardController extends Controller{
      */
     public function __construct()
     {
-        $this->middleware('auth' , [ 'except' => ['index', 'show'] ]);
+        $this->middleware('auth' , [ 'except' => ['index', 'show  '] ]);
     }
 
     public function index(){
@@ -34,6 +34,30 @@ class BoardController extends Controller{
     	]);
 
     	return response()->json([ 'message' => 'success'], 200);
+    }
+
+    public function update(Request $request, $id){
+        $board = Board::find($id);
+        $board->update($request->all());
+
+        return response()->json([
+            'message'   => 'success',
+            'board'     => $board
+        ],200);
+    }
+
+    public function destroy($id){
+        if(Board::destory($id)){
+            return response()->json([
+                'status'    => 'success',
+                'message'   => 'Board Deleted Successfully.'
+            ],200);
+        }
+
+        return response()->json([
+            'status'    => 'error',
+            'message'   => 'Something went wrong.'
+        ], 400);
     }
 
 }

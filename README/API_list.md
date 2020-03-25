@@ -28,22 +28,34 @@
         <td>api_token</td>
     </tr>
     <tr>
-        <td rowspan="3">Boards</td>
+        <td rowspan="5">Boards</td>
         <td>No</td>
         <td>GET</td>
         <td>/boards</td>
         <td></td>
     </tr>
     <tr>
-        <td>NO</td>
+        <td>No</td>
         <td>GET</td>
         <td>/boards/{id}</td>
         <td>'id' Field will be board id.</td>
     </tr>
     <tr>
-        <td>YES</td>
+        <td>Yes</td>
         <td>POST</td>
         <td>/boards</td>
         <td>name, user_id </td>
+    </tr>
+    <tr>
+        <td>Yes</td>
+        <td>Put</td>
+        <td>/boards/{id}</td>
+        <td>'id' Field will be board id.</td>
+    </tr>
+    <tr>
+        <td>Yes</td>
+        <td>Delete</td>
+        <td>/boards/{id}</td>
+        <td>'id' Field will be board id.</td>
     </tr>
 </table>
