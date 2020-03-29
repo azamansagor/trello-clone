@@ -29,13 +29,13 @@
     </tr>
     <tr>
         <td rowspan="5">Boards</td>
-        <td>No</td>
+        <td>YES</td>
         <td>GET</td>
         <td>/boards</td>
         <td></td>
     </tr>
     <tr>
-        <td>No</td>
+        <td>YES</td>
         <td>GET</td>
         <td>/boards/{id}</td>
         <td>'id' Field will be board id.</td>
