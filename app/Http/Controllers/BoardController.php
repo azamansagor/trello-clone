@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Board;
+use Illuminate\Support\Facades\Auth;
 
 class BoardController extends Controller{
 
@@ -14,31 +15,51 @@ class BoardController extends Controller{
      */
     public function __construct()
     {
-        $this->middleware('auth' , [ 'except' => ['index', 'show  '] ]);
+        $this->middleware('auth' , [ 'except' => ['index', 'show '] ]);
     }
 
-    public function index(){
-    	return Board::all();
-    }
-
-    public function show($id){
-    	$board = Board::findOrFail($id);
-    	return $board;
+    public function index(Request $request){
+        // return $request->user()->boards;
+        return Auth::user()->boards;
     }
 
     public function store(Request $request){
 
     	Board::create([
     		'name' 		=> $request->name,
-    		'user_id'	=> 1
+    		'user_id'	=> Auth::id()
     	]);
 
     	return response()->json([ 'message' => 'success'], 200);
     }
 
+    public function show($id){
+        $board = Board::findOrFail($id); 
+
+        if(Auth::user()->id !== $board->user_id){
+            return response()->json([
+                'status'    => 'error',
+                'message'   => 'Unauthorized'
+            ], 401);
+        }
+
+        return $board;
+    }
+
     public function update(Request $request, $id){
         $board = Board::find($id);
-        $board->update($request->all());
+
+        if(Auth::id() !== $board->user_id){
+            return response()->json([
+                'status'    => 'error',
+                'message'   => 'Unauthorized'
+            ], 401);
+        }
+
+
+        $board->update([
+            'name'      => $request->name
+        ]);
 
         return response()->json([
             'message'   => 'success',
@@ -47,7 +68,17 @@ class BoardController extends Controller{
     }
 
     public function destroy($id){
-        if(Board::destory($id)){
+
+        $board = Board::findOrFail($id);
+
+        if(Auth::user()->id !== $board->user_id){
+            return response()->json([
+                'status'    => 'error',
+                'message'   => 'Unauthorized'
+            ], 401);
+        }
+
+        if(Board::destroy($id)){
             return response()->json([
                 'status'    => 'success',
                 'message'   => 'Board Deleted Successfully.'

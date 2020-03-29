@@ -24,9 +24,9 @@ $router->post('register', 'AuthController@register');
 $router->post('logout', 'AuthController@logout');
 
 
-//board routes
+//boards routes
 $router->get('/boards', 'BoardController@index');
 $router->post('/boards', 'BoardController@store');
-$router->get('/boards/{id}', 'BoardController@show');
 $router->put('/boards/{id}', 'BoardController@update');
-$router->delete('/boards/{id}' , 'BoardController@destory');
+$router->get('/boards/{id}', 'BoardController@show');
+$router->delete('/boards/{id}' , 'BoardController@destroy');

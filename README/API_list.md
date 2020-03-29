@@ -44,17 +44,17 @@
         <td>Yes</td>
         <td>POST</td>
         <td>/boards</td>
-        <td>name, user_id </td>
+        <td>name </td>
     </tr>
     <tr>
         <td>Yes</td>
-        <td>Put</td>
+        <td>PUT</td>
         <td>/boards/{id}</td>
         <td>'id' Field will be board id.</td>
     </tr>
     <tr>
         <td>Yes</td>
-        <td>Delete</td>
+        <td>DELETE</td>
         <td>/boards/{id}</td>
         <td>'id' Field will be board id.</td>
     </tr>
