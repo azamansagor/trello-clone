@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Board;
 use Illuminate\Support\Facades\Auth;
 
-class BoardController extends Controller{
+class ListController extends Controller{
 
 /**
      * Create a new controller instance.
@@ -19,22 +19,44 @@ class BoardController extends Controller{
         $this->middleware('auth');
     }
 
-    public function index(){
-        // return $request->user()->boards;
-        return Auth::user()->boards;
+    public function index($boardId){
+        $board = Board::findOrFail($boardId);
+
+        if(Auth::id() !== $board->user_id){
+            return response()->json([
+                'status'    => 'error',
+                'message'   => 'Unauthorized'
+            ], 401);
+        }
+        return response()->json([
+            'lists' => $board->lists
+        ]);
     }
 
-    public function store(Request $request){
+    public function store(Request $request, $boardId){
 
-        Auth::user()->boards()->create([
+        $this->validate($request,[
+            'name'  => 'required'
+        ]);
+
+        $board = Board::findOrFail($boardId);
+        if(Auth::id() !== $board->user_id){
+            return response()->json([
+                'status'    => 'error',
+                'message'   => 'Unauthorized'
+            ], 401);
+        }
+
+        $board->lists()->create([
     		'name' 		=> $request->name,
     	]);
 
     	return response()->json([ 'message' => 'success'], 200);
     }
 
-    public function show($id){
-        $board = Board::findOrFail($id); 
+    public function show($boardId, $listId){
+
+        $board = Board::findOrFail($boardId); 
 
         if(Auth::user()->id !== $board->user_id){
             return response()->json([
@@ -43,11 +65,21 @@ class BoardController extends Controller{
             ], 401);
         }
 
-        return $board;
+        $list = $board->lists()->find($listId);
+
+        return response()->json([
+            'status'    => 'success',
+            'list'      => $list
+        ]);
     }
 
-    public function update(Request $request, $id){
-        $board = Board::find($id);
+    public function update(Request $request, $boardId , $listId){
+
+        $this->validate($request,[
+            'name'  => 'required'
+        ]);
+
+        $board = Board::find($boardId);
 
         if(Auth::id() !== $board->user_id){
             return response()->json([
@@ -67,9 +99,9 @@ class BoardController extends Controller{
         ],200);
     }
 
-    public function destroy($id){
+    public function destroy($boardId , $listId){
 
-        $board = Board::findOrFail($id);
+        $board = Board::findOrFail($boardId);
 
         if(Auth::user()->id !== $board->user_id){
             return response()->json([
@@ -78,10 +110,11 @@ class BoardController extends Controller{
             ], 401);
         }
 
-        if(Board::destroy($id)){
+        $list = $board->lists()->find($listId);
+        if($list->delete()){
             return response()->json([
                 'status'    => 'success',
-                'message'   => 'Board Deleted Successfully.'
+                'message'   => 'List Deleted Successfully.'
             ],200);
         }
 

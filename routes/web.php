@@ -27,6 +27,13 @@ $router->post('logout', 'AuthController@logout');
 //boards routes
 $router->get('/boards', 'BoardController@index');
 $router->post('/boards', 'BoardController@store');
-$router->put('/boards/{id}', 'BoardController@update');
-$router->get('/boards/{id}', 'BoardController@show');
-$router->delete('/boards/{id}' , 'BoardController@destroy');
+$router->put('/boards/{board}', 'BoardController@update');
+$router->get('/boards/{board}', 'BoardController@show');
+$router->delete('/boards/{board}' , 'BoardController@destroy');
+
+//list for card's routes
+$router->get('/boards/{board}/list', 'ListController@index');
+$router->post('/boards/{board}/list', 'ListController@store');
+$router->put('/boards/{board}/list/{list}', 'ListController@update');
+$router->get('/boards/{board}/list/{list}', 'ListController@show');
+$router->delete('/boards/{board}/list/{list}' , 'ListController@destroy');
