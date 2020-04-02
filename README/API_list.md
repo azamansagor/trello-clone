@@ -93,4 +93,36 @@
         <td>/boards/{board}/list/{list}</td>
         <td>'board' => board id, 'list' => list id </td>
     </tr>
+    <!-- Card -->
+    <tr>
+        <td rowspan="5">Cards</td>
+        <td>Yes</td>
+        <td>GET</td>
+        <td>/boards/{board}/list/{list}/card/{card}</td>
+        <td>'board' => board id</td>
+    </tr>
+    <tr>
+        <td>Yes</td>
+        <td>GET</td>
+        <td>/boards/{board}/list/{list}/card/</td>
+        <td>'board' => board id , 'list' => list id</td>
+    </tr>
+    <tr>
+        <td>Yes</td>
+        <td>POST</td>
+        <td>/boards/{board}/list/{list}/card/{card}</td>
+        <td>'board' => board id , 'name' => list name , 'name' => card name</td>
+    </tr>
+    <tr>
+        <td>Yes</td>
+        <td>PUT</td>
+        <td>/boards/{board}/list/{list}/card/{card}</td>
+        <td>'board' => board id, 'list' => list id , 'card' => card id , 'name' => updated card name</td>
+    </tr>
+    <tr>
+        <td>Yes</td>
+        <td>DELETE</td>
+        <td>/boards/{board}/list/{list}/card/{card}</td>
+        <td>'board' => board id, 'list' => list id , 'card' => card id</td>
+    </tr>
 </table>

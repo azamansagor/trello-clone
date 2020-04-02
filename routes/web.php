@@ -37,3 +37,10 @@ $router->post('/boards/{board}/list', 'ListController@store');
 $router->put('/boards/{board}/list/{list}', 'ListController@update');
 $router->get('/boards/{board}/list/{list}', 'ListController@show');
 $router->delete('/boards/{board}/list/{list}' , 'ListController@destroy');
+
+//cards routes
+$router->get('/boards/{board}/list/{list}/card', 'CardController@index');
+$router->post('/boards/{board}/list/{list}/card', 'CardController@store');
+$router->put('/boards/{board}/list/{list}/card/{card}', 'CardController@update');
+$router->get('/boards/{board}/list/{list}/card/{card}', 'CardController@show');
+$router->delete('/boards/{board}/list/{list}/card/{card}' , 'CardController@destroy');

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Board;
 use Illuminate\Support\Facades\Auth;
 
-class ListController extends Controller{
+class CardController extends Controller{
 
 /**
      * Create a new controller instance.
@@ -19,7 +19,7 @@ class ListController extends Controller{
         $this->middleware('auth');
     }
 
-    public function index($boardId){
+    public function index($boardId , $listId){
         $board = Board::findOrFail($boardId);
 
         if(Auth::id() !== $board->user_id){
@@ -28,12 +28,15 @@ class ListController extends Controller{
                 'message'   => 'Unauthorized'
             ], 401);
         }
+
+        $list = $board->lists()->find($listId);
+
         return response()->json([
-            'lists' => $board->lists
+            'cards' => $list->cards
         ]);
     }
 
-    public function store(Request $request, $boardId){
+    public function store(Request $request, $boardId , $listId){
 
         $this->validate($request,[
             'name'  => 'required'
@@ -47,17 +50,19 @@ class ListController extends Controller{
             ], 401);
         }
 
-        $board->lists()->create([
+        $list = $board->lists()->find($listId);
+
+        $list->cards()->create([
     		'name' 		=> $request->name,
     	]);
 
     	return response()->json([
             'status' => 'success',
-            'message' => 'List Created Successfully.',
+            'message'   => 'Card Created Successfully.'
         ], 200);
     }
 
-    public function show($boardId, $listId){
+    public function show($boardId, $listId, $cardId){
 
         $board = Board::findOrFail($boardId); 
 
@@ -68,15 +73,15 @@ class ListController extends Controller{
             ], 401);
         }
 
-        $list = $board->lists()->find($listId);
+        $card = $board->lists()->find($listId)->cards()->find($cardId);
 
         return response()->json([
             'status'    => 'success',
-            'list'      => $list
+            'card'      => $card
         ]);
     }
 
-    public function update(Request $request, $boardId , $listId){
+    public function update(Request $request, $boardId , $listId , $cardId){
 
         $this->validate($request,[
             'name'  => 'required'
@@ -92,18 +97,15 @@ class ListController extends Controller{
         }
 
 
-        $list = $board->lists()->find($listId);
-        $list->update([
-            'name'      => $request->name
-        ]);
+        $card = $board->lists()->find($listId)->cards()->find($cardId)->update($request->all());
 
         return response()->json([
             'message'   => 'success',
-            'list'     => $list
+            'card'     => $card
         ],200);
     }
 
-    public function destroy($boardId , $listId){
+    public function destroy($boardId , $listId, $cardId){
 
         $board = Board::findOrFail($boardId);
 
@@ -114,11 +116,11 @@ class ListController extends Controller{
             ], 401);
         }
 
-        $list = $board->lists()->find($listId);
-        if($list->delete()){
+        $card = $board->lists()->find($listId)->cards()->find($cardId );
+        if($card->delete()){
             return response()->json([
                 'status'    => 'success',
-                'message'   => 'List Deleted Successfully.'
+                'message'   => 'Card Deleted Successfully.'
             ],200);
         }
 
