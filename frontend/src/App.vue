@@ -2,14 +2,20 @@
   <v-app>
     <v-toolbar>
       <v-menu offset-y>
-        <v-btn primary flat slot="activator">
-          <!-- <v-icon left>developer_board</v-icon>  -->
-          Boards
-        </v-btn>
+        <!-- <v-icon left>developer_board</v-icon>  -->
+        <template v-slot:activator="{ on }">
+          <v-btn
+            color="primary"
+            dark
+            v-on="on"
+          >
+            Boards
+          </v-btn>
+        </template>
         <v-list>
-          <v-list-tile v-for="item in items" :key="item.title">
-            <v-list-tile-title>{{ item.title}}</v-list-tile-title>
-          </v-list-tile>
+          <v-list-item v-for="item in items" :key="item.title">
+            <v-list-item-title>{{ item.title}}</v-list-item-title>
+          </v-list-item>
         </v-list>
       </v-menu>
 
@@ -20,7 +26,7 @@
       <v-spacer></v-spacer>
 
       <div>
-        <router-link to="register" tag="span"> <v-btn flat>Register</v-btn> </router-link>
+        <router-link to="register" tag="span"> <v-btn >Register</v-btn> </router-link>
       </div>
     </v-toolbar>  
 
@@ -43,7 +49,26 @@ export default {
   },
 
   data: () => ({
-    drawer: false, 
+    drawer: false,
+    title: 'Toolbar Title',
+    items: [
+      {
+        icon : 'bubble_chart',
+        title: 'hello'
+      },
+      {
+        icon : 'bubble_chart',
+        title: 'hello'
+      },
+      {
+        icon : 'bubble_chart',
+        title: 'hello'
+      },
+      {
+        icon : 'bubble_chart',
+        title: 'hello'
+      },
+    ]
   }),
 };
 </script>
